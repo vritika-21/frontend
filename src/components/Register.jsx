@@ -22,19 +22,27 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log('Submitting:', formData);  //add this
     try {
-      await axios.post('http://localhost:5000/api/auth/register', formData,{withCredentials: true});
+      await axios.post('http://localhost:5001/api/auth/register', formData,{withCredentials: true});
       toast.success('Registration successful!', {
         position: 'top-center',
         autoClose: 2000,
       });
       navigate('/login');
     } catch (err) {
-      console.error(err);
+      if (err.response.data.message === 'Email already exists') {
+        toast.error('This email is already registered', {
+          position: 'top-center',
+          autoClose: 2000,
+        });
+      } else {
+        console.error('Full error:', err.response.data); 
       toast.error('Registration failed!', {
         position: 'top-center',
         autoClose: 2000,
       });
+      }
     }
   };
 

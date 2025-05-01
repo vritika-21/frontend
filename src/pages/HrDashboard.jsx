@@ -8,77 +8,35 @@ const HrDashboard = () => {
     return (
         <>
             <Navbar />
-            <div style={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                justifyContent: 'center',
-                minHeight: '100vh',
-                backgroundColor: '#f0f4f8',
-                fontFamily: 'Arial, sans-serif'
-            }}>
-                <div style={{
-                    backgroundColor: '#fff',
-                    padding: '2rem 3rem',
-                    borderRadius: '8px',
-                    boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
-                    textAlign: 'center',
-                    maxWidth: '400px',
-                    width: '100%'
-                }}>
-                    <h1 style={{ marginBottom: '1rem', color: '#333' }}>HR Panel</h1>
-                    <p style={{ marginBottom: '2rem', color: '#555' }}>Manage Employees, Feedback, Leaves, Payslips</p>
+            <div className="min-h-screen bg-gradient-to-r from-yellow-400 to-yellow-600 flex flex-col items-center justify-center font-poppins">
+                <div className="bg-white p-10 rounded-2xl shadow-lg w-full max-w-3xl">
+                    <div className="text-center">
+                        <h1 className="mb-4 text-3xl font-bold text-gray-800">HR Panel</h1>
+                        <p className="mb-6 text-gray-600">Manage Employees, Feedback, Leaves, Payslips</p>
+                    </div>
 
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-6">
                         <button
                             onClick={() => navigate('/manage-employees')}
-                            style={{
-                                padding: '0.75rem',
-                                borderRadius: '5px',
-                                backgroundColor: '#007bff',
-                                color: '#fff',
-                                border: 'none',
-                                cursor: 'pointer'
-                            }}
+                            className="w-full py-3 rounded-lg text-white font-semibold transition bg-blue-500 hover:bg-blue-600"
                         >
                             Manage Employees
                         </button>
                         <button
                             onClick={() => navigate('/view-feedback')}
-                            style={{
-                                padding: '0.75rem',
-                                borderRadius: '5px',
-                                backgroundColor: '#17a2b8',
-                                color: '#fff',
-                                border: 'none',
-                                cursor: 'pointer'
-                            }}
+                            className="w-full py-3 rounded-lg text-white font-semibold transition bg-cyan-500 hover:bg-cyan-600"
                         >
                             View Feedback
                         </button>
                         <button
                             onClick={() => navigate('/approve-leaves')}
-                            style={{
-                                padding: '0.75rem',
-                                borderRadius: '5px',
-                                backgroundColor: '#28a745',
-                                color: '#fff',
-                                border: 'none',
-                                cursor: 'pointer'
-                            }}
+                            className="w-full py-3 rounded-lg text-white font-semibold transition bg-green-500 hover:bg-green-600"
                         >
                             Approve Leaves
                         </button>
                         <button
                             onClick={() => navigate('/generate-payslip')}
-                            style={{
-                                padding: '0.75rem',
-                                borderRadius: '5px',
-                                backgroundColor: '#ffc107',
-                                color: '#000',
-                                border: 'none',
-                                cursor: 'pointer'
-                            }}
+                            className="w-full py-3 rounded-lg text-white font-semibold transition bg-yellow-400 hover:bg-yellow-500"
                         >
                             Generate Payslip
                         </button>

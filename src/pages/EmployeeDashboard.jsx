@@ -14,17 +14,18 @@ const EmployeeDashboard = () => {
                 alignItems: 'center',
                 justifyContent: 'center',
                 minHeight: '100vh',
-                backgroundColor: '#f0f4f8',
-                fontFamily: 'Arial, sans-serif'
+                background: 'linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%)',
+                fontFamily: '"Poppins", sans-serif'
             }}>
                 <div style={{
-                    backgroundColor: '#fff',
+                    backgroundColor: '#ffffff',
                     padding: '2rem 3rem',
-                    borderRadius: '8px',
-                    boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
+                    borderRadius: '12px',
+                    boxShadow: '0 10px 25px rgba(0, 0, 0, 0.1)',
                     textAlign: 'center',
-                    maxWidth: '400px',
-                    width: '100%'
+                    maxWidth: '450px',
+                    width: '100%',
+                    border: '1px solid #e0e0e0'
                 }}>
                     <h1 style={{ marginBottom: '1rem', color: '#333' }}>Employee Panel</h1>
                     <p style={{ marginBottom: '2rem', color: '#555' }}>Manage your daily activities below:</p>
@@ -32,12 +33,15 @@ const EmployeeDashboard = () => {
                         <button
                             onClick={() => navigate('/attendance')}
                             style={{
-                                padding: '0.75rem',
-                                borderRadius: '5px',
+                                padding: '0.85rem',
+                                borderRadius: '8px',
                                 backgroundColor: '#007bff',
                                 color: '#fff',
                                 border: 'none',
-                                cursor: 'pointer'
+                                cursor: 'pointer',
+                                fontWeight: 'bold',
+                                fontSize: '1rem',
+                                transition: 'background-color 0.3s ease'
                             }}
                         >
                             Mark Attendance
@@ -45,22 +49,25 @@ const EmployeeDashboard = () => {
                         <button
                             onClick={() => navigate('/leave')}
                             style={{
-                                padding: '0.75rem',
-                                borderRadius: '5px',
+                                padding: '0.85rem',
+                                borderRadius: '8px',
                                 backgroundColor: '#28a745',
                                 color: '#fff',
                                 border: 'none',
-                                cursor: 'pointer'
+                                cursor: 'pointer',
+                                fontWeight: 'bold',
+                                fontSize: '1rem',
+                                transition: 'background-color 0.3s ease'
                             }}
                         >
                             Apply for Leave
                         </button>
                         <div style={{
                             marginTop: '2rem',
-                            backgroundColor: '#fff3cd',
+                            backgroundColor: '#fff8e1',
                             padding: '1.5rem',
-                            borderRadius: '8px',
-                            border: '1px solid #ffeeba',
+                            borderRadius: '12px',
+                            border: '1px solid #ffe082',
                             textAlign: 'center'
                         }}>
                             <p style={{ marginBottom: '1rem', color: '#856404', fontSize: '1.1rem' }}>
@@ -69,13 +76,15 @@ const EmployeeDashboard = () => {
                             <button
                                 onClick={() => navigate('/feedback')}
                                 style={{
-                                    padding: '0.75rem 1.5rem',
-                                    borderRadius: '5px',
+                                    padding: '0.85rem 1.5rem',
+                                    borderRadius: '8px',
                                     backgroundColor: '#ffc107',
                                     color: '#000',
                                     border: 'none',
                                     cursor: 'pointer',
-                                    fontWeight: 'bold'
+                                    fontWeight: 'bold',
+                                    fontSize: '1rem',
+                                    transition: 'background-color 0.3s ease'
                                 }}
                             >
                                 Give Feedback
