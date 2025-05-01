@@ -24,7 +24,16 @@ const Feedback = () => {
 
         setSubmitting(true);
         try {
-            await axios.post('http://localhost:5000/api/feedback', { message });
+            const token = localStorage.getItem('token');
+            await axios.post(
+                'http://localhost:5001/api/employee/feedback',
+                { message },
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
+            );
             toast.success('Feedback submitted anonymously!', {
                 position: 'top-center',
                 autoClose: 2000,

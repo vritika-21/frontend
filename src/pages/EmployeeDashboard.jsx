@@ -8,88 +8,34 @@ const EmployeeDashboard = () => {
     return (
         <>
             <Navbar />
-            <div style={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                justifyContent: 'center',
-                minHeight: '100vh',
-                background: 'linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%)',
-                fontFamily: '"Poppins", sans-serif'
-            }}>
-                <div style={{
-                    backgroundColor: '#ffffff',
-                    padding: '2rem 3rem',
-                    borderRadius: '12px',
-                    boxShadow: '0 10px 25px rgba(0, 0, 0, 0.1)',
-                    textAlign: 'center',
-                    maxWidth: '450px',
-                    width: '100%',
-                    border: '1px solid #e0e0e0'
-                }}>
-                    <h1 style={{ marginBottom: '1rem', color: '#333' }}>Employee Panel</h1>
-                    <p style={{ marginBottom: '2rem', color: '#555' }}>Manage your daily activities below:</p>
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+            <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-r from-yellow-400 to-yellow-600 font-poppins">
+                <div className="bg-white p-10 rounded-2xl shadow-lg w-full max-w-md border border-gray-200 text-center">
+                    <h1 className="text-2xl font-bold text-gray-800 mb-4">Employee Panel</h1>
+                    <p className="text-gray-600 mb-6">Manage your daily activities below:</p>
+                    <div className="flex flex-col gap-4">
                         <button
                             onClick={() => navigate('/attendance')}
-                            style={{
-                                padding: '0.85rem',
-                                borderRadius: '8px',
-                                backgroundColor: '#007bff',
-                                color: '#fff',
-                                border: 'none',
-                                cursor: 'pointer',
-                                fontWeight: 'bold',
-                                fontSize: '1rem',
-                                transition: 'background-color 0.3s ease'
-                            }}
+                            className="w-full py-3 rounded-lg bg-blue-600 text-white font-semibold text-base hover:bg-blue-700 transition"
                         >
                             Mark Attendance
                         </button>
                         <button
                             onClick={() => navigate('/leave')}
-                            style={{
-                                padding: '0.85rem',
-                                borderRadius: '8px',
-                                backgroundColor: '#28a745',
-                                color: '#fff',
-                                border: 'none',
-                                cursor: 'pointer',
-                                fontWeight: 'bold',
-                                fontSize: '1rem',
-                                transition: 'background-color 0.3s ease'
-                            }}
+                            className="w-full py-3 rounded-lg bg-green-600 text-white font-semibold text-base hover:bg-green-700 transition"
                         >
                             Apply for Leave
                         </button>
-                        <div style={{
-                            marginTop: '2rem',
-                            backgroundColor: '#fff8e1',
-                            padding: '1.5rem',
-                            borderRadius: '12px',
-                            border: '1px solid #ffe082',
-                            textAlign: 'center'
-                        }}>
-                            <p style={{ marginBottom: '1rem', color: '#856404', fontSize: '1.1rem' }}>
-                                Hey! How was your experience? Want to give feedback?
-                            </p>
-                            <button
-                                onClick={() => navigate('/feedback')}
-                                style={{
-                                    padding: '0.85rem 1.5rem',
-                                    borderRadius: '8px',
-                                    backgroundColor: '#ffc107',
-                                    color: '#000',
-                                    border: 'none',
-                                    cursor: 'pointer',
-                                    fontWeight: 'bold',
-                                    fontSize: '1rem',
-                                    transition: 'background-color 0.3s ease'
-                                }}
-                            >
-                                Give Feedback
-                            </button>
-                        </div>
+                    </div>
+                    <div className="mt-8 bg-yellow-100 p-6 rounded-xl border border-yellow-300 text-center">
+                        <p className="text-yellow-800 text-base font-medium mb-4">
+                            Hey! How was your experience? Want to give feedback?
+                        </p>
+                        <button
+                            onClick={() => navigate('/feedback')}
+                            className="px-6 py-2 rounded-lg bg-yellow-400 text-black font-semibold hover:bg-yellow-500 transition"
+                        >
+                            Give Feedback
+                        </button>
                     </div>
                 </div>
             </div>

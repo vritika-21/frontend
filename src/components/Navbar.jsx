@@ -7,14 +7,14 @@ const Navbar = () => {
 
     useEffect(() => {
         
-        const loggedUser = JSON.parse(localStorage.getItem('user')); 
+        const loggedUser = JSON.parse(localStorage.getItem('employee'));
         if (loggedUser) {
             setUser(loggedUser); 
         }
     }, []);
 
     const handleLogout = () => {
-        localStorage.removeItem('user'); 
+        localStorage.removeItem('employee'); 
         setUser(null); 
         navigate('/login'); 
     };

@@ -8,7 +8,6 @@ import Navbar from '../components/Navbar';
 const Login = () => {
     const navigate = useNavigate();
     const [formData, setFormData] = useState({ emp_email: '', emp_password: '' });
-   // const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
@@ -24,6 +23,7 @@ const Login = () => {
         setLoading(true);
         try {
             const res = await loginUser(formData);
+            localStorage.setItem('token', res.data.token);
             toast.success(res.data.message || 'Login successful!', {
                 position: "top-center",
                 autoClose: 2000,

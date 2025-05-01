@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Navbar from '../components/Navbar';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const Attendance = () => {
     const [attendance, setAttendance] = useState({
@@ -9,23 +11,73 @@ const Attendance = () => {
         checkedOut: false
     });
 
-    const handleCheckIn = () => {
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        if (!token) {
+            toast.error("Please login to access attendance!");
+            navigate('/login');
+        }
+    }, []);
+
+    const handleCheckIn = async () => {
         if (attendance.checkedIn) {
             toast.warning("Attendance already marked!");
         } else {
-            setAttendance({ ...attendance, checkedIn: true });
-            toast.success("Checked in successfully!");
+            try {
+                const token = localStorage.getItem('token');
+                const currentDate = new Date();
+                const data = {
+                    date: currentDate.toISOString().split('T')[0],
+                    checkInTime: currentDate.toTimeString().split(' ')[0]
+                };
+
+                const response = await axios.post('http://localhost:5001/api/attendance/checkin', data, {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                });
+
+                if (response.status === 200) {
+                    setAttendance({ ...attendance, checkedIn: true });
+                    toast.success("Checked in successfully!");
+                }
+            } catch (error) {
+                console.error("Check-in error:", error.response ? error.response.data : error);
+                toast.error(error.response ? error.response.data.message : "Failed to check in!");
+            }
         }
     };
 
-    const handleCheckOut = () => {
+    const handleCheckOut = async () => {
         if (!attendance.checkedIn) {
             toast.warning("Please check in first!");
         } else if (attendance.checkedOut) {
             toast.warning("Already checked out!");
         } else {
-            setAttendance({ ...attendance, checkedOut: true });
-            toast.success("Checked out successfully!");
+            try {
+                const token = localStorage.getItem('token');
+                const currentDate = new Date();
+                const data = {
+                    date: currentDate.toISOString().split('T')[0],
+                    checkOutTime: currentDate.toTimeString().split(' ')[0]
+                };
+
+                const response = await axios.post('http://localhost:5001/api/attendance/checkout', data, {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                });
+
+                if (response.status === 200) {
+                    setAttendance({ ...attendance, checkedOut: true });
+                    toast.success("Checked out successfully!");
+                }
+            } catch (error) {
+                console.error("Check-out error:", error);
+                toast.error("Failed to check out!");
+            }
         }
     };
 
@@ -33,74 +85,35 @@ const Attendance = () => {
         <>
             <Navbar />
             <ToastContainer />
-            <div style={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                justifyContent: 'center',
-                minHeight: '100vh',
-                background: 'linear-gradient(135deg, #d0f4de 0%, #a9def9 100%)',
-                fontFamily: '"Poppins", sans-serif',
-                padding: '2rem'
-            }}>
-                <div style={{
-                    backgroundColor: '#ffffff',
-                    padding: '2rem',
-                    borderRadius: '12px',
-                    boxShadow: '0 10px 25px rgba(0, 0, 0, 0.1)',
-                    width: '100%',
-                    maxWidth: '600px',
-                    border: '1px solid #e0e0e0'
-                }}>
-                    <h2 style={{ textAlign: 'center', marginBottom: '1.5rem', color: '#333' }}>Mark Your Attendance</h2>
-                    <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: '1rem' }}>
-                        <thead>
-                            <tr style={{ backgroundColor: '#f1f1f1' }}>
-                                <th style={{ padding: '0.75rem', border: '1px solid #ddd' }}>Date</th>
-                                <th style={{ padding: '0.75rem', border: '1px solid #ddd' }}>Check-In</th>
-                                <th style={{ padding: '0.75rem', border: '1px solid #ddd' }}>Check-Out</th>
+            <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-yellow-400 to-yellow-600 font-poppins p-4">
+                <div className="bg-white p-8 rounded-2xl shadow-lg w-full max-w-2xl">
+                    <h2 className="text-3xl font-extrabold text-gray-800 text-center mb-6">Mark Your Attendance</h2>
+                    <table className="w-full border border-collapse mb-4 text-center">
+                        <thead className="bg-gray-100">
+                            <tr>
+                                <th className="py-2 px-4 border">Date</th>
+                                <th className="py-2 px-4 border">Check-In</th>
+                                <th className="py-2 px-4 border">Check-Out</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <td style={{ padding: '0.75rem', border: '1px solid #ddd', textAlign: 'center' }}>
-                                    {new Date().toLocaleDateString()}
-                                </td>
-                                <td style={{ padding: '0.75rem', border: '1px solid #ddd', textAlign: 'center' }}>
-                                    {attendance.checkedIn ? '✔️' : '-'}
-                                </td>
-                                <td style={{ padding: '0.75rem', border: '1px solid #ddd', textAlign: 'center' }}>
-                                    {attendance.checkedOut ? '✔️' : '-'}
-                                </td>
+                                <td className="py-2 px-4 border">{new Date().toLocaleDateString()}</td>
+                                <td className="py-2 px-4 border">{attendance.checkedIn ? '✔️' : '-'}</td>
+                                <td className="py-2 px-4 border">{attendance.checkedOut ? '✔️' : '-'}</td>
                             </tr>
                         </tbody>
                     </table>
-                    <div style={{ display: 'flex', justifyContent: 'space-around', marginTop: '1rem' }}>
+                    <div className="flex justify-around mt-6">
                         <button
                             onClick={handleCheckIn}
-                            style={{
-                                padding: '0.85rem 1.5rem',
-                                backgroundColor: '#007bff',
-                                color: '#fff',
-                                border: 'none',
-                                borderRadius: '8px',
-                                fontWeight: 'bold',
-                                cursor: 'pointer'
-                            }}
+                            className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition"
                         >
                             Check In
                         </button>
                         <button
                             onClick={handleCheckOut}
-                            style={{
-                                padding: '0.85rem 1.5rem',
-                                backgroundColor: '#28a745',
-                                color: '#fff',
-                                border: 'none',
-                                borderRadius: '8px',
-                                fontWeight: 'bold',
-                                cursor: 'pointer'
-                            }}
+                            className="bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-6 rounded-lg transition"
                         >
                             Check Out
                         </button>
