@@ -16,7 +16,7 @@ const Attendance = () => {
     checkOutTime: '',
   });
 
-  // Get today's date in YYYY-MM-DD format
+
   const todayDate = new Date().toISOString().split('T')[0];
 
   useEffect(() => {
@@ -27,7 +27,7 @@ const Attendance = () => {
       return;
     }
 
-    // Fetch today's attendance status
+  
     const fetchAttendance = async () => {
       try {
         const response = await axios.get(
@@ -45,7 +45,7 @@ const Attendance = () => {
           });
         }
       } catch (error) {
-        // If no record for today, leave as default (not checked in/out)
+      
         setAttendance({
           checkedIn: false,
           checkedOut: false,
@@ -56,7 +56,7 @@ const Attendance = () => {
     };
 
     fetchAttendance();
-    // eslint-disable-next-line
+  
   }, [navigate]);
 
   const handleCheckIn = async () => {

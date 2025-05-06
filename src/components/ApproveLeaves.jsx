@@ -31,7 +31,7 @@ const ApproveLeaves = () => {
       }
     };
     fetchLeaves();
-    // eslint-disable-next-line
+    
   }, []);
 
   // Approve leave

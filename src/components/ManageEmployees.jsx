@@ -63,7 +63,7 @@ const ManageEmployees = () => {
         body: JSON.stringify({
           emp_name: name,
           emp_email: email,
-          emp_password: '', // set the default password
+          emp_password: '', 
           emp_department: department,
           emp_status: status,
           leaveBalance: leaveBalance,

@@ -28,7 +28,7 @@ const GeneratePayslip = () => {
       const downloadUrl = `${API_BASE}/api/hr/generate-payslip/${selectedEmpId}`;
 
       const response = await fetch(downloadUrl, {
-        method: 'POST', // Or 'GET' if your backend expects GET
+        method: 'POST', 
         headers: {
           'Authorization': `Bearer ${token}`,
         },
@@ -41,10 +41,8 @@ const GeneratePayslip = () => {
         return;
       }
 
-      // Get the PDF blob
       const blob = await response.blob();
 
-      // Trigger browser download
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
