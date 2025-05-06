@@ -10,6 +10,7 @@ import GeneratePayslip from './components/GeneratePayslip';
 import Attendance from './pages/Attendance';
 import Leave from './pages/Leave';
 import Feedback from './pages/Feedback';
+import GenerateOfferLetter from './components/GenerateOfferLetter';
 
 function App() {
     return (
@@ -22,8 +23,10 @@ function App() {
                 <Route path="/manage-employees" element={<ManageEmployees />} />
                 <Route path="/approve-leaves" element={<ApproveLeaves/>} />
                 <Route path="/generate-payslip" element={<GeneratePayslip />} />
+                <Route path="/generate-offer-letter" element={<GenerateOfferLetter />} />
                 <Route path="/view-feedback" element={<ViewFeedback />} />
                 <Route path="/feedback" element={<Feedback />} />
+
 
                 <Route path="/employee-dashboard" element={<EmployeeDashboard />} />
                 <Route path="/attendance" element={<Attendance />} />

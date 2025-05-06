@@ -15,7 +15,7 @@ const HrDashboard = () => {
                         <p className="mb-6 text-gray-600">Manage Employees, Feedback, Leaves, Payslips</p>
                     </div>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-6">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-6 justify-center">
                         <button
                             onClick={() => navigate('/manage-employees')}
                             className="w-full py-3 rounded-lg text-white font-semibold transition bg-blue-500 hover:bg-blue-600"
@@ -40,6 +40,14 @@ const HrDashboard = () => {
                         >
                             Generate Payslip
                         </button>
+                        <div className="flex justify-center">
+                            <button
+                                onClick={() => navigate('/generate-offer-letter')}
+                                className="w-full py-3 rounded-lg text-white font-semibold transition bg-purple-500 hover:bg-purple-600"
+                            >
+                                Generate Offer Letter
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>

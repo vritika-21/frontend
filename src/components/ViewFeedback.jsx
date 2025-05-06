@@ -7,7 +7,13 @@ const ViewFeedback = () => {
   useEffect(() => {
     const fetchFeedbacks = async () => {
       try {
-        const res = await fetch('/api/feedbacks');
+        const res = await fetch('http://localhost:5001/api/hr/view-feedback', {
+          method: 'GET',
+          credentials: 'include',
+          headers: {
+            'Authorization': 'Bearer ' + localStorage.getItem('token'),
+          },
+        });
         if (res.ok) {
           const data = await res.json();
           setFeedbacks(data);
@@ -23,20 +29,16 @@ const ViewFeedback = () => {
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-yellow-400 to-yellow-600 font-poppins">
       <Navbar />
       <div className="bg-white p-8 rounded-2xl shadow-lg w-full max-w-3xl">
-        <table className="min-w-full border-collapse">
-          <thead>
-            <tr>
-              <th className="py-2 px-4 border-b bg-gray-100 text-center">Feedbacks</th>
-            </tr>
-          </thead>
-          <tbody>
-            {feedbacks.map((fb, index) => (
-              <tr key={index}>
-                <td className="py-2 px-4 border-b">{fb.message}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <h2 className="text-2xl font-semibold mb-6 text-center text-gray-800">Feedbacks</h2>
+        <div className="flex flex-col items-center gap-6">
+          {feedbacks.map((fb, index) => (
+            <div key={index} className="w-full">
+              <div className="bg-yellow-100 p-6 rounded-xl shadow-lg border border-yellow-300 transition-transform hover:scale-105 w-full">
+                <p className="text-gray-700 text-base italic text-center">"{fb.message}"</p>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
