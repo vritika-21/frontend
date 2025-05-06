@@ -12,7 +12,7 @@ const Leave = () => {
   const fetchLeaves = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.get('http://localhost:5001/api/leave/all', {
+      const response = await axios.get('http://localhost:5001/api/leave', {
         headers: { Authorization: `Bearer ${token}` },
       });
       if (response.status === 200) {
