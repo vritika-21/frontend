@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Navbar from '../components/Navbar';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+const API_BASE = process.env.REACT_APP_API_BASE;
 
 const Leave = () => {
   const [reason, setReason] = useState('');
@@ -12,7 +16,7 @@ const Leave = () => {
   const fetchLeaves = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.get('http://localhost:5001/api/leave', {
+      const response = await axios.get(`${API_BASE}/api/leave`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       if (response.status === 200) {
@@ -37,7 +41,7 @@ const Leave = () => {
     try {
       const token = localStorage.getItem('token');
       const response = await axios.post(
-        'http://localhost:5001/api/employee/leave',
+        `${API_BASE}/api/employee/leave`,
         { reason, leaveDate },
         {
           headers: {
@@ -46,7 +50,10 @@ const Leave = () => {
         }
       );
       if (response.status === 200) {
-        alert('Leave request submitted successfully!');
+        toast.success('Leave request submitted successfully!', {
+          position: 'top-center',
+          autoClose: 2000,
+        });
         setReason('');
         setLeaveDate('');
         setError('');
@@ -55,12 +62,17 @@ const Leave = () => {
     } catch (error) {
       console.error('Error submitting leave request:', error);
       setError('Failed to submit leave request. Please try again later.');
+      toast.error('Failed to submit leave request. Please try again later.', {
+        position: 'top-center',
+        autoClose: 2000,
+      });
     }
   };
 
   return (
     <>
       <Navbar />
+      <ToastContainer />
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-yellow-400 to-yellow-600 font-poppins p-4">
         <div className="bg-white p-8 rounded-2xl shadow-lg w-full max-w-2xl">
           <h1 className="text-3xl font-extrabold text-gray-800 text-center mb-4">Leave Application</h1>

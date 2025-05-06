@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import Navbar from './Navbar';
 import { toast } from 'react-toastify';
 
+const API_BASE = process.env.REACT_APP_API_BASE;
+
 const ApproveLeaves = () => {
   const [leaveRequests, setLeaveRequests] = useState([]);
   const token = localStorage.getItem('token');
@@ -10,13 +12,13 @@ const ApproveLeaves = () => {
   useEffect(() => {
     const fetchLeaves = async () => {
       try {
-         const res = await fetch('http://localhost:5001/api/hr/leaves', {
-         method: 'GET',
-         headers: {
-           'Content-Type': 'application/json',
-           'Authorization': `Bearer ${token}`,
-         },
-         });
+        const res = await fetch(`${API_BASE}/api/hr/leaves`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`,
+          },
+        });
 
         if (res.ok) {
           const data = await res.json();
@@ -29,12 +31,13 @@ const ApproveLeaves = () => {
       }
     };
     fetchLeaves();
+    // eslint-disable-next-line
   }, []);
 
   // Approve leave
   const handleApprove = async (leaveId) => {
     try {
-      const res = await fetch('http://localhost:5001/api/hr/employees/approve', {
+      const res = await fetch(`${API_BASE}/api/hr/employees/approve`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -60,7 +63,7 @@ const ApproveLeaves = () => {
   // Reject leave
   const handleReject = async (leaveId) => {
     try {
-      const res = await fetch('http://localhost:5001/api/hr/employees/reject', {
+      const res = await fetch(`${API_BASE}/api/hr/employees/reject`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

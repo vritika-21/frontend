@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import Navbar from './Navbar';
 
+const API_BASE = process.env.REACT_APP_API_BASE;
+
 const ViewFeedback = () => {
   const [feedbacks, setFeedbacks] = useState([]);
 
   useEffect(() => {
     const fetchFeedbacks = async () => {
       try {
-        const res = await fetch('http://localhost:5001/api/hr/view-feedback', {
+        const res = await fetch(`${API_BASE}/api/hr/view-feedback`, {
           method: 'GET',
           credentials: 'include',
           headers: {

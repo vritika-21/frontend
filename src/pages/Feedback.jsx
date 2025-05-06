@@ -4,6 +4,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Navbar from '../components/Navbar';
 
+const API_BASE = process.env.REACT_APP_API_BASE;
+
 const Feedback = () => {
     const [message, setMessage] = useState('');
     const [submitting, setSubmitting] = useState(false);
@@ -26,7 +28,7 @@ const Feedback = () => {
         try {
             const token = localStorage.getItem('token');
             await axios.post(
-                'http://localhost:5001/api/employee/feedback',
+                `${API_BASE}/api/employee/feedback`,
                 { message },
                 {
                     headers: {

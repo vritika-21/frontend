@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import Navbar from './Navbar';
 import { toast } from 'react-toastify';
 
+const API_BASE = process.env.REACT_APP_API_BASE;
+
 const GeneratePayslip = () => {
   const [selectedEmpId, setSelectedEmpId] = useState('');
   const [loading, setLoading] = useState(false);
@@ -23,7 +25,7 @@ const GeneratePayslip = () => {
     setLoading(true);
 
     try {
-      const downloadUrl = `http://localhost:5001/api/hr/generate-payslip/${selectedEmpId}`;
+      const downloadUrl = `${API_BASE}/api/hr/generate-payslip/${selectedEmpId}`;
 
       const response = await fetch(downloadUrl, {
         method: 'POST', // Or 'GET' if your backend expects GET

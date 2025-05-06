@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+const API_BASE = process.env.REACT_APP_API_BASE;
+
 const ManageEmployees = () => {
   const [employees, setEmployees] = useState([]);
   const [name, setName] = useState('');
@@ -15,7 +17,6 @@ const ManageEmployees = () => {
 
   useEffect(() => {
     const token = localStorage.getItem('token');
-    console.log("Token being sent:", token);  // Check token in console
     if (!token) {
       toast.error("Unauthorized access. Please log in.");
       navigate('/login');
@@ -24,7 +25,7 @@ const ManageEmployees = () => {
 
     const fetchEmployees = async () => {
       try {
-        const response = await fetch('http://localhost:5001/api/hr/employees', {
+        const response = await fetch(`${API_BASE}/api/hr/employees`, {
           headers: { Authorization: `Bearer ${token}` },
         });
 
@@ -46,8 +47,6 @@ const ManageEmployees = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const token = localStorage.getItem('token');
-    console.log("Token being sent:", token);  // Log token being sent
-
     if (!token) {
       toast.error("Unauthorized access. Please log in.");
       navigate('/login');
@@ -55,7 +54,7 @@ const ManageEmployees = () => {
     }
 
     try {
-      const response = await fetch('http://localhost:5001/api/hr/employees', {
+      const response = await fetch(`${API_BASE}/api/hr/employees`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -78,7 +77,8 @@ const ManageEmployees = () => {
         setStatus('active');
         setLeaveBalance(12);
         toast.success('Employee added successfully!');
-        const fetchResponse = await fetch('http://localhost:5001/api/hr/employees', {
+        // Refresh employee list
+        const fetchResponse = await fetch(`${API_BASE}/api/hr/employees`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         if (fetchResponse.ok) {
@@ -96,9 +96,11 @@ const ManageEmployees = () => {
   };
 
   const handleDelete = async (id) => {
+    const token = localStorage.getItem('token');
     try {
-      const response = await fetch(`/api/hr/employees/${id}`, {
+      const response = await fetch(`${API_BASE}/api/hr/employees/${id}`, {
         method: 'DELETE',
+        headers: { Authorization: `Bearer ${token}` },
       });
       if (response.ok) {
         setEmployees(prev => prev.filter(emp => emp._id !== id));

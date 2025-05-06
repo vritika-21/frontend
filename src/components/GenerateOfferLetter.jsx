@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import Navbar from './Navbar';
 import { toast } from 'react-toastify';
 
+const API_BASE = process.env.REACT_APP_API_BASE;
+
 const GenerateOfferLetter = () => {
   const [employeeId, setEmployeeId] = useState('');
   const [employeeDetails, setEmployeeDetails] = useState(null);
@@ -17,11 +19,10 @@ const GenerateOfferLetter = () => {
     const fetchEmployee = async () => {
       setLoadingDetails(true);
       try {
-        const res = await fetch(`http://localhost:5001/api/hr/employees/${employeeId}`, {
+        const res = await fetch(`${API_BASE}/api/hr/employees/${employeeId}`, {
           headers: {
             'Authorization': `Bearer ${localStorage.getItem('token')}`,
           },
-          
         });
         if (res.ok) {
           const data = await res.json();
@@ -39,6 +40,7 @@ const GenerateOfferLetter = () => {
     };
 
     fetchEmployee();
+    // eslint-disable-next-line
   }, [employeeId]);
 
   // Generate Offer Letter PDF
@@ -50,7 +52,7 @@ const GenerateOfferLetter = () => {
     }
     setLoadingGenerate(true);
     try {
-      const response = await fetch(`http://localhost:5001/api/hr/offer-letter/${employeeId}`, {
+      const response = await fetch(`${API_BASE}/api/hr/offer-letter/${employeeId}`, {
         method: 'GET',
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`,
