@@ -5,11 +5,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-const Attendance = () => {
-    const [attendance, setAttendance] = useState({
-        checkedIn: false,
-        checkedOut: false
-    });
+ const Attendance = () => {
 
     const navigate = useNavigate();
 
@@ -22,9 +18,6 @@ const Attendance = () => {
     }, []);
 
     const handleCheckIn = async () => {
-        if (attendance.checkedIn) {
-            toast.warning("Attendance already marked!");
-        } else {
             try {
                 const token = localStorage.getItem('token');
                 const currentDate = new Date();
@@ -32,30 +25,24 @@ const Attendance = () => {
                     date: currentDate.toISOString().split('T')[0],
                     checkInTime: currentDate.toTimeString().split(' ')[0]
                 };
-
-                const response = await axios.post('http://localhost:5001/api/attendance/checkin', data, {
+               
+                const response = await axios.post('https://backend-zeta-livid-69.vercel.app/api/attendance/checkin', data, {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }
                 });
 
                 if (response.status === 200) {
-                    setAttendance({ ...attendance, checkedIn: true });
                     toast.success("Checked in successfully!");
                 }
             } catch (error) {
                 console.error("Check-in error:", error.response ? error.response.data : error);
                 toast.error(error.response ? error.response.data.message : "Failed to check in!");
             }
-        }
+        //}
     };
 
     const handleCheckOut = async () => {
-        if (!attendance.checkedIn) {
-            toast.warning("Please check in first!");
-        } else if (attendance.checkedOut) {
-            toast.warning("Already checked out!");
-        } else {
             try {
                 const token = localStorage.getItem('token');
                 const currentDate = new Date();
@@ -71,15 +58,13 @@ const Attendance = () => {
                 });
 
                 if (response.status === 200) {
-                    setAttendance({ ...attendance, checkedOut: true });
                     toast.success("Checked out successfully!");
                 }
             } catch (error) {
                 console.error("Check-out error:", error);
                 toast.error("Failed to check out!");
             }
-        }
-    };
+   };
 
     return (
         <>
@@ -98,9 +83,17 @@ const Attendance = () => {
                         </thead>
                         <tbody>
                             <tr>
-                                <td className="py-2 px-4 border">{new Date().toLocaleDateString()}</td>
-                                <td className="py-2 px-4 border">{attendance.checkedIn ? '✔️' : '-'}</td>
-                                <td className="py-2 px-4 border">{attendance.checkedOut ? '✔️' : '-'}</td>
+                                <td className="py-2 px-4 border">
+                                    {(() => {
+                                        const date = new Date();
+                                        const day = String(date.getDate()).padStart(2, '0');
+                                        const month = String(date.getMonth() + 1).padStart(2, '0');
+                                        const year = String(date.getFullYear()).slice(-2);
+                                        return `${day}-${month}-${year}`;
+                                    })()}
+                                </td>
+                              {/* <td className="py-2 px-4 border">{attendance.checkedIn ? '✔️' : '-'}</td>
+                                <td className="py-2 px-4 border">{attendance.checkedOut ? '✔️' : '-'}</td> */}
                             </tr>
                         </tbody>
                     </table>
