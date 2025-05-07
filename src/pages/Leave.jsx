@@ -71,7 +71,7 @@ const Leave = () => {
     }
   };
 
-  // Date formatting function for dd-mm-yyyy
+ 
   const formatDate = (dateString) => {
     if (!dateString) return '';
     const date = new Date(dateString);
