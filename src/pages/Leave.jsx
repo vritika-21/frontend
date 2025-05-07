@@ -8,7 +8,8 @@ const API_BASE = process.env.REACT_APP_API_BASE;
 
 const Leave = () => {
   const [reason, setReason] = useState('');
-  const [leaveDate, setLeaveDate] = useState('');
+  const [fromDate, setFromDate] = useState('');
+  const [toDate, setToDate] = useState('');
   const [error, setError] = useState('');
   const [leaveRequests, setLeaveRequests] = useState([]);
   const [leaveBalance, setLeaveBalance] = useState(12);
@@ -34,7 +35,7 @@ const Leave = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!reason || !leaveDate) {
+    if (!reason || !fromDate || !toDate) {
       setError('Please fill out all fields.');
       return;
     }
@@ -42,7 +43,7 @@ const Leave = () => {
       const token = localStorage.getItem('token');
       const response = await axios.post(
         `${API_BASE}/api/employee/leave`,
-        { reason, leaveDate },
+        { reason, fromDate, toDate },
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -55,7 +56,8 @@ const Leave = () => {
           autoClose: 2000,
         });
         setReason('');
-        setLeaveDate('');
+        setFromDate('');
+        setToDate('');
         setError('');
         fetchLeaves();
       }
@@ -67,6 +69,16 @@ const Leave = () => {
         autoClose: 2000,
       });
     }
+  };
+
+  // Date formatting function for dd-mm-yyyy
+  const formatDate = (dateString) => {
+    if (!dateString) return '';
+    const date = new Date(dateString);
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
+    return `${day}-${month}-${year}`;
   };
 
   return (
@@ -88,8 +100,16 @@ const Leave = () => {
             />
             <input
               type="date"
-              value={leaveDate}
-              onChange={(e) => setLeaveDate(e.target.value)}
+              value={fromDate}
+              onChange={(e) => setFromDate(e.target.value)}
+              placeholder="From Date"
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500"
+            />
+            <input
+              type="date"
+              value={toDate}
+              onChange={(e) => setToDate(e.target.value)}
+              placeholder="To Date"
               className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500"
             />
             <button
@@ -104,7 +124,8 @@ const Leave = () => {
             <table className="min-w-full table-auto border-collapse">
               <thead className="bg-gray-100 text-gray-700">
                 <tr>
-                  <th className="py-2 px-4 border">Date</th>
+                  <th className="py-2 px-4 border">From Date</th>
+                  <th className="py-2 px-4 border">To Date</th>
                   <th className="py-2 px-4 border">Reason</th>
                   <th className="py-2 px-4 border">Status</th>
                   <th className="py-2 px-4 border">Leave Balance</th>
@@ -114,9 +135,10 @@ const Leave = () => {
               <tbody>
                 {leaveRequests.map((leave, index) => (
                   <tr key={index} className="text-center">
-                    <td className="py-2 px-4 border">{leave.leaveDate}</td>
+                    <td className="py-2 px-4 border">{formatDate(leave.fromDate)}</td>
+                    <td className="py-2 px-4 border">{formatDate(leave.toDate)}</td>
                     <td className="py-2 px-4 border">{leave.reason}</td>
-                    <td className="py-2 px-4 border">{leave.status || 'Pending'}</td>
+                    <td className="py-2 px-4 border">{leave.status || 'pending'}</td>
                     <td className="py-2 px-4 border">{leaveBalance}</td>
                     <td className="py-2 px-4 border">
                       <button className="bg-yellow-500 hover:bg-yellow-600 text-white font-semibold px-3 py-1 rounded mr-2">Update</button>
