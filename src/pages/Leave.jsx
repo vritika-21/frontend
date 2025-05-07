@@ -71,16 +71,6 @@ const Leave = () => {
     }
   };
 
- 
-  const formatDate = (dateString) => {
-    if (!dateString) return '';
-    const date = new Date(dateString);
-    const day = String(date.getDate()).padStart(2, '0');
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const year = date.getFullYear();
-    return `${day}-${month}-${year}`;
-  };
-
   return (
     <>
       <Navbar />
@@ -135,8 +125,8 @@ const Leave = () => {
               <tbody>
                 {leaveRequests.map((leave, index) => (
                   <tr key={index} className="text-center">
-                    <td className="py-2 px-4 border">{formatDate(leave.fromDate)}</td>
-                    <td className="py-2 px-4 border">{formatDate(leave.toDate)}</td>
+                    <td className="py-2 px-4 border">{leave.fromDate ? leave.fromDate.slice(0,10) : ''}</td>
+                    <td className="py-2 px-4 border">{leave.toDate ? leave.toDate.slice(0,10) : ''}</td>
                     <td className="py-2 px-4 border">{leave.reason}</td>
                     <td className="py-2 px-4 border">{leave.status || 'pending'}</td>
                     <td className="py-2 px-4 border">{leaveBalance}</td>
